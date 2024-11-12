@@ -7,6 +7,9 @@ import random
 def isNumber(toCheck):
     return isinstance(toCheck, numbers.Number)
 
+def isNumber(toCheck):
+    return isinstance(toCheck, numbers.Number)
+
 # Inverse Cosine
 def invCos():
     print('Under construction!')
@@ -127,12 +130,7 @@ def expGrowth(a, b, x):
         return a * exp(b, x)
     except:
         print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the exponential growth/decay function.')
-
-# FUNCTION TESTING
-#print(exp(2,0.8))
-#print(expGrowth(10, 0, 2))
-#print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
-
+        
 def log_test_cases(precision=1e-8): 
     for test in range (1, 51):
         base = random.uniform(1.1, 10)
@@ -149,3 +147,8 @@ def log_test_cases(precision=1e-8):
             print(f"Test case: {test} failed: log({argument}, {base}) = {result}, expected {expected_log}, precision {result - expected_log}")
 
 log_test_cases()
+
+# FUNCTION TESTING
+print(exp(2,0.8))
+print(expGrowth(10, 0, 2))
+print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
