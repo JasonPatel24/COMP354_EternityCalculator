@@ -22,7 +22,6 @@ def stdDev():
 
 # Exponentiation
 def exp(x, y):
-    print('Under construction!')
     if y == 0:
         return 1
     
@@ -43,8 +42,26 @@ def exp(x, y):
     return answer
 
 # Exponential Growth
-def expGrowth():
-    print('Under construction!')
-    return None
+def expGrowth(a, b, x):
+    try:
+        # Error handling
+        if (a <= 0):
+            print('ERROR: Base \'a\' must be greater than 0.')
+            exit()
 
+        if (b > 1 or b < 0):
+            print('ERROR: Growth/Decay rate \'b\' must be a real number between 0 and 1.')
+            exit()
+
+        if (x < 0):
+            print('ERROR: exponent \'x\' cannot be negative.')
+            exit()
+
+        # Perform exponential growth/decay on provided values and return result
+        return a * exp(b, x)
+    except:
+        print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the exponential growth/decay function.')
+
+# FUNCTION TESTING
 print(exp(2,0.8))
+print(expGrowth(10, 0.6, -12))
