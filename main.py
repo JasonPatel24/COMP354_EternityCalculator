@@ -45,7 +45,7 @@ def exp(x, y):
 
     return answer
 
-# Exponential Growth
+# Exponential Growth (for decay, provide a value for b such that 0 < b < 1)
 def expGrowth(a, b, x):
     try:
         # Error handling
@@ -57,8 +57,8 @@ def expGrowth(a, b, x):
             print('ERROR: Base \'a\' must be greater than 0.')
             exit()
 
-        if (b > 1 or b < 0):
-            print('ERROR: Growth/Decay rate \'b\' must be a real number between 0 and 1.')
+        if (b < 0):
+            print('ERROR: Growth/Decay rate \'b\' must be a real number greater than 0.')
             exit()
 
         if (x < 0):
@@ -72,4 +72,4 @@ def expGrowth(a, b, x):
 
 # FUNCTION TESTING
 print(exp(2,0.8))
-print(expGrowth(10, 0.6, 12))
+print(expGrowth(10, 0, 2))
