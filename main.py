@@ -49,19 +49,19 @@ def exp(x, y):
 def expGrowth(a, b, x):
     try:
         # Error handling
-        if (not isNumber(a) or not isNumber(b) or not isNumber(x)):
+        if (not isNumber(a) or not isNumber(b) or not isNumber(x)): # Ensure all parameters are valid real numbers
             print('ERROR: At least one of \'a\', \'b\', or \'x\' is not a valid number.')
             exit()
 
-        if (a <= 0):
+        if (a <= 0): # base value must be positive
             print('ERROR: Base \'a\' must be greater than 0.')
             exit()
 
-        if (b < 0):
+        if (b < 0): # growth/decay rate cannot be negative
             print('ERROR: Growth/Decay rate \'b\' must be a real number greater than 0.')
             exit()
 
-        if (x < 0):
+        if (x < 0): # exponent cannot be negative
             print('ERROR: exponent \'x\' cannot be negative.')
             exit()
 
