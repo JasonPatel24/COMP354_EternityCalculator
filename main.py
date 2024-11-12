@@ -16,9 +16,30 @@ def log():
     return None
 
 # Mean absolute deviation
-def meanAbsDev():
-    print('Under construction!')
-    return None
+def meanAbsDev(data):
+    try:
+        # Error handling
+        for data_point in data:
+            # Ensure all data points are valid numbers
+            if (not isNumber(data_point)):
+                print(f"ERROR: '{data_point}' is not a valid number.")
+                exit()
+
+        # Calculate the mean of the dataset
+        mean = sum(data) / len(data)
+        total_deviation = 0
+
+        # Calculate the absolute deviations from the mean
+        for data_point in data:
+            total_deviation += abs(data_point - mean)
+
+        # Calculate and return the mean of the absolute deviations
+        return total_deviation / len(data)
+    except TypeError as e:
+        print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the mean absolute deviation function.')
+        print(f"Details: {e}")
+        return None
+
 # Standard deviation
 def stdDev():
     print('Under construction!')
@@ -73,3 +94,4 @@ def expGrowth(a, b, x):
 # FUNCTION TESTING
 print(exp(2,0.8))
 print(expGrowth(10, 0, 2))
+print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
