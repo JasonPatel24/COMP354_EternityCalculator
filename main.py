@@ -1,6 +1,11 @@
 import math # Useful math functions provided by Python
 import numbers # Useful if you need to check if your value is a real number
 import sys # To read user input
+import random
+
+
+def isNumber(toCheck):
+    return isinstance(toCheck, numbers.Number)
 
 def isNumber(toCheck):
     return isinstance(toCheck, numbers.Number)
@@ -10,10 +15,45 @@ def invCos():
     print('Under construction!')
     return None
 
-# Logarithmic
-def log():
-    print('Under construction!')
-    return None
+# Logarithmic that will
+def log(argument, base, precision = 1e-11):
+    if (base == 2):
+        return log_helper(argument, precision)
+    if (base < 0 or base == 1):
+        print("Logarithmic function is neither defined for negative bases nor one.")
+        exit()
+    nominator = log_helper(argument, precision)
+    denominator = log_helper(base, precision)
+    result = nominator/denominator
+    return result
+
+#Define log function with base 2 for simplicity.
+def log_helper(argument, precision = 1e-11):
+    if argument <= 0:
+        print("Logarithmic function is neither defined for negative arguments nor zero.")
+    
+    if (argument == 1): #1 as an argument
+        return 0
+    
+    #We will try to narrow down the answer using binary search.
+    if argument > 1:
+        low, high = 0, argument
+
+    else: #If argument is lesser than 1, then the answer must be negative. Set the low bound to a sufficiently negative number.
+        low, high = -20, 0
+
+    
+    while high - low > precision:   #If interval of answer is higher than the precision, try to narrow again.
+        mid = (low + high) / 2      #Find the middle ground of the interval
+        power = 2 ** mid            #Find the result of 2^mid
+        if power < argument:        #If the result of 2^mid is lower than argument given, mid will become new low.
+            low = mid
+        else:                       #Otherwise, if its higher than the argument given, mid will become new high.
+            high = mid
+    return (low + high) / 2         #Return middle of interval as the answer
+
+    
+
 
 # Mean absolute deviation
 def meanAbsDev(data):
@@ -90,6 +130,23 @@ def expGrowth(a, b, x):
         return a * exp(b, x)
     except:
         print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the exponential growth/decay function.')
+        
+def log_test_cases(precision=1e-8): 
+    for test in range (1, 51):
+        base = random.uniform(1.1, 10)
+        argument = random.uniform(0.1, 350)
+
+        expected_log = math.log(argument, base)
+
+        # Compute the result using the custom log function
+        result = log(argument, base)
+
+        if abs(result - expected_log) < precision:
+            print("Test case: " + str(test) + " success")
+        else:
+            print(f"Test case: {test} failed: log({argument}, {base}) = {result}, expected {expected_log}, precision {result - expected_log}")
+
+log_test_cases()
 
 # FUNCTION TESTING
 print(exp(2,0.8))
