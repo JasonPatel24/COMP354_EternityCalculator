@@ -14,7 +14,6 @@ def isNumber(toCheck):
 def invCos():
     print('Under construction!')
     return None
-
 # Logarithmic that will
 def log(argument, base, precision = 1e-11):
     if (base == 2):
@@ -81,9 +80,24 @@ def meanAbsDev(data):
         return None
 
 # Standard deviation
-def stdDev():
-    print('Under construction!')
-    return None
+def stdDev(data):
+    try:
+        # Error handling to ensure all data points are valid numbers
+        for data_point in data:
+            if not isNumber(data_point):
+                print(f"ERROR: '{data_point}' is not a valid number.")
+                return None
+
+        # Calculate the mean of the dataset
+        mean = sum(data) / len(data)
+        # Calculate the variance
+        variance = sum((data_point - mean) ** 2 for data_point in data) / len(data)
+        # Return the square root of the variance, which is the standard deviation
+        return math.sqrt(variance)
+    except TypeError as e:
+        print("An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters.")
+        print(f"Details: {e}")
+        return None
 
 # Exponentiation
 def exp(x, y):
@@ -152,3 +166,4 @@ log_test_cases()
 print(exp(2,0.8))
 print(expGrowth(10, 0, 2))
 print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
+print(stdDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
