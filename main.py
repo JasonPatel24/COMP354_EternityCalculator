@@ -3,6 +3,11 @@ import sys # To read user input
 
 # Inverse Cosine
 def invCos(x, terms=20):
+    # Check if input is a number
+    if not isinstance(x, (int, float)):
+        raise TypeError("Input must be a number.")
+    
+    # Check if input is within the valid range for arccosine
     if not -1 <= x <= 1:
         raise ValueError("Input must be in the range -1 to 1.")
     
