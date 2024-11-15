@@ -15,19 +15,19 @@ def invCos():
     print('Under construction!')
     return None
 # Logarithmic that will
-def log(argument, base, precision = 1e-11):
+def log(argument, base):
     if (base == 2):
-        return log_helper(argument, precision)
+        return log_helper(argument)
     if (base < 0 or base == 1):
         print("Logarithmic function is neither defined for negative bases nor one.")
         exit()
-    nominator = log_helper(argument, precision)
-    denominator = log_helper(base, precision)
+    nominator = log_helper(argument)
+    denominator = log_helper(base)
     result = nominator/denominator
     return result
 
 #Define log function with base 2 for simplicity.
-def log_helper(argument, precision = 1e-11):
+def log_helper(argument):
     if argument <= 0:
         print("Logarithmic function is neither defined for negative arguments nor zero.")
     
@@ -42,7 +42,7 @@ def log_helper(argument, precision = 1e-11):
         low, high = -20, 0
 
     
-    while high - low > precision:   #If interval of answer is higher than the precision, try to narrow again.
+    while high - low > 1e-11:   #If interval of answer is higher than the precision, try to narrow again.
         mid = (low + high) / 2      #Find the middle ground of the interval
         power = 2 ** mid            #Find the result of 2^mid
         if power < argument:        #If the result of 2^mid is lower than argument given, mid will become new low.
@@ -145,7 +145,7 @@ def expGrowth(a, b, x):
     except:
         print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the exponential growth/decay function.')
         
-def log_test_cases(precision=1e-8): 
+def log_test_cases(): 
     for test in range (1, 51):
         base = random.uniform(1.1, 10)
         argument = random.uniform(0.1, 350)
@@ -155,15 +155,104 @@ def log_test_cases(precision=1e-8):
         # Compute the result using the custom log function
         result = log(argument, base)
 
-        if abs(result - expected_log) < precision:
+        if abs(result - expected_log) < 1e-9:
             print("Test case: " + str(test) + " success")
         else:
             print(f"Test case: {test} failed: log({argument}, {base}) = {result}, expected {expected_log}, precision {result - expected_log}")
 
-log_test_cases()
+
 
 # FUNCTION TESTING
+"""
+log_test_cases()
 print(exp(2,0.8))
 print(expGrowth(10, 0, 2))
 print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
 print(stdDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
+"""
+import tkinter as tk
+import re
+import math
+
+def TUI_calculator():
+    main_functions = ["arccos(x)", "ab^x", "log_b(x)", "MAD", "σ", "x^y"]
+
+    print("Welcome to Eternity TUI Calculator!\n")
+    
+    while(True):
+        print("\nPlease choose one of the following functions to perform: ")
+        index = 1
+        for element in main_functions:
+            print(f"{index}. {element}")
+            index += 1
+        print("0. Exit")
+        user_input = int(input("Please enter a valid index (1 to 6): "))
+    
+        if user_input == 1:
+            print("You selected arccos(x)")
+            None
+            #TO FINISH!
+        elif user_input == 2:
+            print("You selected ab^x")
+
+            a = float(input("Please enter the value of a: "))
+            b = float(input("Please enter the value of b: "))
+            x = float(input("Please enter the value of x: "))
+            print("The result: " + str(expGrowth(a,b,x)))
+        elif user_input == 3:
+            print("You selected log_b(x)")
+            b = float(input("Please enter the value of b: "))
+            x = float(input("Please enter the value of x: "))
+            print("The result: " + str(log(x, b)))
+        elif user_input == 4:
+            print("You selected MAD")
+            input_list = input("Please enter the values you wish to calculate the MAD of separated by commas (,).")
+            input_list = input_list.split(',')
+            try:
+                numbers = [float(x.strip()) for x in input_list]  
+            except ValueError:
+                print("nan")
+                return
+
+            print("The result: " + str(meanAbsDev(numbers)))
+
+        elif user_input == 5:
+            print("You selected σ")
+        
+            input_list = input("Please enter the values you wish to calculate the stdev of separated by commas (,).")
+            input_list = input_list.split(',')
+            try:
+                numbers = [float(x.strip()) for x in input_list]  
+            except ValueError:
+                print("nan")
+                return
+
+            print("The result: " + str(stdDev(numbers)))   
+        elif user_input == 6:
+
+            print("You selected x^y")
+            x = float(input("Please enter the value of x: "))
+            y = float(input("Please enter the value of y: "))
+            print("The result: " + str(exp(x,y)))
+        elif user_input == 0:
+            print("Thank you for using Eternity. Exiting program now")
+            break
+        else:
+            print("Invalid selection, please choose a number between 1 and 6.")
+
+    
+
+
+
+def GUI_calculator():
+    None
+
+
+
+print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface)\n")
+user_input = (input("Please enter 0 or 1: ")).strip()
+
+if (user_input == "0"):
+    TUI_calculator()
+elif (user_input == "1"):
+    GUI_calculator()
