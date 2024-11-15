@@ -32,6 +32,13 @@ def invCos(x, terms=20):
     
     return result
 
+# Example usage
+try:
+    result = invCos("0.5")
+    print("The approximate inverse cosine is:", result)
+except (TypeError, ValueError) as e:
+    print(e)
+
 # Logarithmic
 def log():
     print('Under construction!')
