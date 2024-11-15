@@ -46,7 +46,7 @@ def invCos(x, terms=20):
 
 # testing
 try:
-    result = invCos(hi)  # undefined variable
+    result = invCos(hi)  
     print(f"Result: {result}")
 except NameError:
     print("Result: Input must be a number")
