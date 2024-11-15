@@ -44,6 +44,7 @@ def invCos(x, terms=20):
     except Exception:
         return "Input must be a number"
 
+# Now you can also test with undefined variables
 try:
     result = invCos(hi)  # undefined variable
     print(f"Result: {result}")
