@@ -64,5 +64,5 @@ def expGrowth():
 
 try:
     print(invCos(0.76)) 
-except NameError:
+except NameError: # Handles undefined variables that may be present before the function is called
     print("Input must be a number")
