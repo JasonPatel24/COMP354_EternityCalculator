@@ -37,12 +37,6 @@ def invCos(x, terms=20):
     
     return result
 
-# Testing
-try:
-    print(invCos(0.99))
-except NameError:
-    print("Input must be a number")
-
 # Logarithmic
 def log():
     print('Under construction!')
@@ -67,3 +61,5 @@ def exp():
 def expGrowth():
     print('Under construction!')
     return None
+
+print(invCos(0.87))
