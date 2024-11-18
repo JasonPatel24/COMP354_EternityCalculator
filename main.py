@@ -62,4 +62,7 @@ def expGrowth():
     print('Under construction!')
     return None
 
-print(invCos(0.87))
+try:
+    print(invCos(0.76)) 
+except NameError:
+    print("Input must be a number")
