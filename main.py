@@ -62,7 +62,7 @@ def expGrowth():
     print('Under construction!')
     return None
 
-try:
+try: # Handles undefined variables that may be present before the function is called
     print(invCos(0.76)) 
-except NameError: # Handles undefined variables that may be present before the function is called
+except NameError: 
     print("Input must be a number")
