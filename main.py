@@ -3,53 +3,45 @@ import sys # To read user input
 
 # Inverse Cosine
 def invCos(x, terms=20):
+    # Validate and convert input
     try:
-        # Handle string input
-        if isinstance(x, str):
-            try:
-                x = float(x)
-            except ValueError:
-                return "Input must be a number"
-        
-        # Handle undefined variable names
-        if not isinstance(x, (int, float)):
-            return "Input must be a number"
-        
-        # Check if input is within the valid range for arccosine
-        if not -1 <= x <= 1:
-            return "Input must be in the range -1 to 1"
-        
-        # Start calculating the inverse cosine using Taylor series
-        pi = 3.141592653589793
-        result = pi / 2
-        sign = 1  # Alternating sign for each term
-        
-        for n in range(terms):
-            # Calculate the factorial terms manually
-            numerator_factorial = 1
-            for i in range(1, 2 * n + 1):
-                numerator_factorial *= i
-            
-            denominator_factorial = 1
-            for i in range(1, n + 1):
-                denominator_factorial *= i
-            
-            term = (numerator_factorial / ((2**n * denominator_factorial)**2 * (2 * n + 1))) * (x**(2 * n + 1))
-            
-            result -= sign * term
-            sign = -sign  # Alternate the sign for the next term
-        
-        return result
-    
-    except Exception:
+        x = float(x)  # Convert input to float if possible
+    except (ValueError, TypeError, NameError):
         return "Input must be a number"
+    
+    # Check if input is within the valid range for arccosine
+    if not -1 <= x <= 1:
+        return "Input must be in the range -1 to 1"
+    
+    # Start calculating the inverse cosine using Taylor series
+    pi = 3.141592653589793
+    result = pi / 2
+    sign = 1  # Alternating sign for each term
+    
+    for n in range(terms):
+        # Calculate factorial terms manually
+        numerator_factorial = 1
+        for i in range(1, 2 * n + 1):
+            numerator_factorial *= i
+        
+        denominator_factorial = 1
+        for i in range(1, n + 1):
+            denominator_factorial *= i
+        
+        # Calculate the current term of the Taylor series
+        term = (numerator_factorial / ((2**n * denominator_factorial)**2 * (2 * n + 1))) * (x**(2 * n + 1))
+        
+        # Update result with alternating sign
+        result -= sign * term
+        sign = -sign
+    
+    return result
 
-# testing
+# Testing
 try:
-    result = invCos(hi)  
-    print(f"Result: {result}")
+    print(invCos(0.99))
 except NameError:
-    print("Result: Input must be a number")
+    print("Input must be a number")
 
 # Logarithmic
 def log():
