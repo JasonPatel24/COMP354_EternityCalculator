@@ -131,6 +131,14 @@ def stdDev(data):
 
 # Exponentiation
 def exp(x, y):
+    
+    #Error handling for 2 cases
+    if x == 0 and y == 0:
+            return "ERROR x value cannot be 0 while y is 0"
+    
+    if x == 0 and y < 0:
+        return "ERROR x value cannot be 0 while y is negative"
+    
     if y == 0:
         return 1
     
@@ -267,8 +275,10 @@ def TUI_calculator():
         elif user_input == 6:
 
             print("You selected x^y")
-            x = float(input("Please enter the value of x: "))
-            y = float(input("Please enter the value of y: "))
+
+            #added eval() for the input so it can take more then one straight number
+            x = float(eval(input("Please enter the value of x: ")))
+            y = float(eval(input("Please enter the value of y: ")))
             print("The result: " + str(exp(x,y)))
         elif user_input == 0:
             print("Thank you for using Eternity. Exiting program now")
