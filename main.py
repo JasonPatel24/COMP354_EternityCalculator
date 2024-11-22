@@ -235,7 +235,7 @@ def TUI_calculator():
             try:
                 x = float(eval(input("Please enter the value of x: ")))
                 print(invCos(x))
-            except ValueError:
+            except NameError:
                 print("Invalid input! Please enter numeric values.")
 
         elif user_input == 2:
