@@ -132,6 +132,14 @@ def stdDev(data):
 
 # Exponentiation
 def exp(x, y):
+    
+    #Error handling for 2 cases
+    if x == 0 and y == 0:
+            return "ERROR x value cannot be 0 while y is 0"
+    
+    if x == 0 and y < 0:
+        return "ERROR x value cannot be 0 while y is negative"
+    
     if y == 0:
         return 1
     if y < 0:
@@ -139,17 +147,16 @@ def exp(x, y):
         y = -y
     integerPart = int(y)
     decimalPart = y-integerPart
-    try: # Handles undefined variables that may be present before the function is called
-        answer = 1
-        for _ in range(integerPart):
-            answer *= x
-        if decimalPart != 0:
-            answer *= x**decimalPart
-        return answer
-    except NameError: 
-        print("Input must be a number")
-        
 
+    answer = 1
+    for _ in range(integerPart):
+        answer *= x
+    
+    if decimalPart != 0:
+        answer *= x**decimalPart
+
+    return answer
+    
 # Exponential Growth (for decay, provide a value for b such that 0 < b < 1)
 def expGrowth(a, b, x):
     try:
@@ -199,6 +206,12 @@ print(exp(2,0.8))
 print(expGrowth(10, 0, 2))
 print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
 print(stdDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
+
+try: # Handles undefined variables that may be present before the function is called
+    print(invCos(0.76)) 
+except NameError: 
+    print("Input must be a number")
+
 """
 import tkinter as tk
 import re
