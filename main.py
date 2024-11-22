@@ -2,6 +2,7 @@ import math # Useful math functions provided by Python
 import numbers # Useful if you need to check if your value is a real number
 import sys # To read user input
 import random
+import time
 
 
 def isNumber(toCheck):
@@ -141,11 +142,9 @@ def exp(x, y):
     
     if y == 0:
         return 1
-    
     if y < 0:
         x = 1/x
         y = -y
-    
     integerPart = int(y)
     decimalPart = y-integerPart
 
@@ -230,69 +229,103 @@ def TUI_calculator():
             print(f"{index}. {element}")
             index += 1
         print("0. Exit")
-        user_input = int(input("Please enter a valid index (1 to 6): "))
+        while(True):
+            try:
+                user_input = int(input("Please enter a valid index (0 to 6): "))
+                if 0 <= user_input <= 6:
+                    break
+                else:
+                    print("Input out of range. Please enter a number between 0 and 6.")
+            except ValueError:
+                print("Input must be an integer!")
     
         if user_input == 1:
             print("You selected arccos(x)")
-            None
-            #TO FINISH!
+            try:
+                x = input("Please enter the value of x: ")
+                print(invCos(x))
+            except ValueError:
+                print("Invalid input! Please enter numeric values.")
+
         elif user_input == 2:
             print("You selected ab^x")
+            try:
+                a = float(input("Please enter the value of a: "))
+                b = float(input("Please enter the value of b: "))
+                x = float(input("Please enter the value of x: "))
+                print("The result: " + str(expGrowth(a, b, x)))
+            except ValueError:
+                print("Invalid input! Please enter numeric values.")
 
-            a = float(input("Please enter the value of a: "))
-            b = float(input("Please enter the value of b: "))
-            x = float(input("Please enter the value of x: "))
-            print("The result: " + str(expGrowth(a,b,x)))
         elif user_input == 3:
             print("You selected log_b(x)")
-            b = float(input("Please enter the value of b: "))
-            x = float(input("Please enter the value of x: "))
-            print("The result: " + str(log(x, b)))
+            try:
+                b = float(input("Please enter the value of b: "))
+                if b == 0:
+                    raise Exception("B cannot be zero.")
+                x = float(input("Please enter the value of x: "))
+                print("The result: " + str(log(x, b)))
+            except ValueError:
+                print("Invalid input! Please enter numeric values.")
+            except Exception as exc:
+                print(exc) 
+
         elif user_input == 4:
             print("You selected MAD")
             input_list = input("Please enter the values you wish to calculate the MAD of separated by commas (,).")
             input_list = input_list.split(',')
+            input_list = [x for x in input_list if x.strip()] #To remove empty strings
             try:
                 numbers = [float(x.strip()) for x in input_list]  
             except ValueError:
-                print("nan")
                 return
-
             print("The result: " + str(meanAbsDev(numbers)))
 
         elif user_input == 5:
             print("You selected σ")
-        
             input_list = input("Please enter the values you wish to calculate the stdev of separated by commas (,).")
             input_list = input_list.split(',')
+            input_list = [x for x in input_list if x.strip()] #To remove empty strings
             try:
                 numbers = [float(x.strip()) for x in input_list]  
             except ValueError:
-                print("nan")
                 return
-
             print("The result: " + str(stdDev(numbers)))   
+
         elif user_input == 6:
-
             print("You selected x^y")
+            try:
+                x = float(input("Please enter the value of x: "))
+                y = float(input("Please enter the value of y: "))
+                print("The result: " + str(exp(x, y)))
+            except ValueError:
+                print("Error: Please enter valid numeric values for x and y.")
 
-            #added eval() for the input so it can take more then one straight number
-            x = float(eval(input("Please enter the value of x: ")))
-            y = float(eval(input("Please enter the value of y: ")))
-            print("The result: " + str(exp(x,y)))
         elif user_input == 0:
             print("Thank you for using Eternity. Exiting program now")
             break
         else:
             print("Invalid selection, please choose a number between 1 and 6.")
+        time.sleep(0.5)
 
+        
 def GUI_calculator():
     None
 
-print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface)\n")
-user_input = (input("Please enter 0 or 1: ")).strip()
+print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface) *NOT AVAILABLE YET*\n")
+while(True):
+    user_input = (input("Please enter 0 or 1: ")).strip()
+    if (user_input == "0"):
+        TUI_calculator()
+        break
+    elif (user_input == "1"):
+        GUI_calculator()
+        break
+    else:
+        print("Invalid input, try again.")
 
-if (user_input == "0"):
-    TUI_calculator()
-elif (user_input == "1"):
-    GUI_calculator()
+
+
+
+    
+
