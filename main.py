@@ -405,7 +405,7 @@ def calc_equal():
 
 while(True):
     print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface)\n2. To Exit the program")
-    user_input = (input("Please enter 0 or 1: ")).strip()
+    user_input = (input("Please enter 0, 1, or 2: ")).strip()
     if (user_input == "0"):
         TUI_calculator()
         break
