@@ -3,7 +3,7 @@ import numbers # Useful if you need to check if your value is a real number
 import sys # To read user input
 import random
 import time
-
+from tkinter import *  
 
 def isNumber(toCheck):
     return isinstance(toCheck, numbers.Number)
@@ -200,20 +200,9 @@ def log_test_cases():
 
 
 # FUNCTION TESTING
-"""
-log_test_cases()
-print(exp(2,0.8))
-print(expGrowth(10, 0, 2))
-print(meanAbsDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
-print(stdDev([10, 12, 23, 23, 16, 23, 21, 16, 15]))
 
-try: # Handles undefined variables that may be present before the function is called
-    print(invCos(0.76)) 
-except NameError: 
-    print("Input must be a number")
-
-"""
 import tkinter as tk
+from tkinter import simpledialog, messagebox
 import re
 import math
 
@@ -302,30 +291,180 @@ def TUI_calculator():
                 print("Error: Please enter valid numeric values for x and y.")
 
         elif user_input == 0:
-            print("Thank you for using Eternity. Exiting program now")
+            print("Thank you for using Eternity TUI. Exiting TUI now")
             break
         else:
             print("Invalid selection, please choose a number between 1 and 6.")
         time.sleep(0.5)
 
-        
-def GUI_calculator():
-    None
 
-print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface) *NOT AVAILABLE YET*\n")
+
+
+def clear_display():
+    display.delete(0, END)
+
+def btn_num(num):
+    if display.get() == '0':
+        display.delete(0, END)
+    pos = len(display.get())
+    display.insert(pos, num)
+
+def btn_op(operator):
+    current_text = display.get()
+    if current_text and current_text[-1] in "+-*/":
+        display.delete(len(current_text) - 1, tk.END)
+    position = len(display.get())
+    display.insert(position, operator)
+
+def btn_stdev_mad_log(operator):
+    if operator == "MAD":
+        display.delete(0, tk.END)
+        display.insert(0, "meanAbsDev(") 
+    elif operator == "stdDev":
+        display.delete(0, tk.END)
+        display.insert(0, "stdDev(") 
+    elif operator == "log":
+        display.delete(0, tk.END)
+        display.insert(0, "log(") 
+    else:
+        position = len(display.get())
+        display.insert(position, operator)
+
+def closing_paren():
+    current_text = display.get()
+    open_paren_count = current_text.count("(")
+    close_paren_count = current_text.count(")")
+    if open_paren_count > close_paren_count:
+        display.insert(tk.END, ")")
+
+def opening_paren():
+    current_text = display.get()
+    if current_text == "" or current_text[-1] in "+-*/":
+        display.insert(tk.END, "(")  # Insert opening parenthesis
+
+def calc_sqrt():
+    try:
+        expression = display.get()
+        if expression != "0":
+            result = math.sqrt(float(expression))  
+            display.delete(0, END)  
+            display.insert(0, str(result)) 
+        else:
+            messagebox.showerror("Input Error", "input must be greater than 0 and must have a number")
+    except ValueError:
+        messagebox.showerror("Input Error", "Invalid input for square root.")
+    except Exception as e:
+        messagebox.showerror("Error", "Error")
+
+def calc_arccos():
+    try:
+        answer = float(display.get())
+        answer = invCos(answer)
+        display.delete(0, END)
+        display.insert(0, str(answer))
+    except Exception:
+        messagebox.showerror("Error calculating the arccos.")
+
+def btn_exp():
+    current_text = display.get()
+    if current_text and current_text[-1] in "+-*/^":
+        display.delete(len(current_text) - 1, tk.END)
+    display.insert(END, "^")  
+
+
+def calc_equal():
+    try:
+        expression = display.get()
+        if "meanAbsDev" in expression or "stdDev" in expression:
+            if expression.count('(') != expression.count(')'):
+                messagebox.showerror("Parenthesis Error", "Mismatched parentheses. Ensure you have a closing parenthesis.")
+                return
+            numbers_str = expression[expression.index('(')+1:expression.index(')')]
+            numbers = list(map(float, numbers_str.split(',')))
+            if "meanAbsDev" in expression:
+                result = meanAbsDev(numbers)
+            elif "stdDev" in expression:
+                result = stdDev(numbers)
+        elif "^" in expression:
+            expression = re.sub(r'(\d+(\.\d+)?)\^(\d+(\.\d+)?)', r'exp(\1, \3)', expression) 
+            result = eval(expression)
+        else:
+            result = eval(expression)  # Use eval to evaluate other expressions
+        display.delete(0, END)
+        display.insert(0, str(result))
+    except:
+        messagebox.showerror("Value Error", "Error")
+        
+
+
+
+
+  
+
+
+
 while(True):
+    print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface)\n2. To Exit the program")
     user_input = (input("Please enter 0 or 1: ")).strip()
     if (user_input == "0"):
         TUI_calculator()
         break
     elif (user_input == "1"):
-        GUI_calculator()
+        root = tk.Tk()
+        root.geometry("1000x550")  # Setting the size
+        root.title("Eternity")  # Setting the title
+
+        # Create a display for the calculator
+        display = tk.Entry(root, font="Verdana 20", fg="Black", bg="White", justify=RIGHT)
+        display.pack(expand=TRUE, fill=BOTH)
+
+        buttons = [
+            ["7", "8", "9", "+", "-","C", "√"],
+            ["4", "5", "6", "*", "(", ")", "MAD"],
+            ["1", "2", "3", "/", "", "", "Stdev"],
+            ["0", ".", "=", ",", "arccos", "log(x, base)", "x^y"]
+        ]
+
+
+        for row in buttons:
+            row_frame = Frame(root, bg="#000000")
+            row_frame.pack(expand=True, fill=tk.BOTH)  # expand 
+
+            for button_text in row:
+                if button_text.isdigit() or button_text == ".":  # Check if it's a number
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda num=button_text: btn_num(num))
+                elif button_text == "C": #Check if its clear button
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=clear_display)
+                elif button_text == "MAD":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda: btn_stdev_mad_log("MAD"))
+                elif button_text == "√":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=calc_sqrt)
+                elif button_text =="log(x, base)":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda: btn_stdev_mad_log("log")) 
+                elif button_text == "Stdev":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda: btn_stdev_mad_log("stdDev"))
+                elif button_text in "+-*/": #Check if its simple arithmetic op
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda op=button_text: btn_op(op))
+                elif button_text == "arccos":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=calc_arccos)
+                elif button_text == "x^y":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=btn_exp)   
+                elif button_text == "=":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=calc_equal)   
+                elif button_text == ",":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=lambda op=button_text: btn_op(op))
+                elif button_text == ")":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=closing_paren)
+                elif button_text == "(":
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5, command=opening_paren)
+                else:
+                    btn = Button(row_frame, text=button_text, font="segoe 18", relief="groove", bd=0, fg="White", bg="#333333", width=5)
+                btn.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)  
+        root.mainloop()
+    elif user_input == "2":
+        print("Thank you for using Eternity! Exiting!")
         break
+
     else:
         print("Invalid input, try again.")
-
-
-
-
-    
 
