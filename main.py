@@ -242,7 +242,7 @@ def TUI_calculator():
         if user_input == 1:
             print("You selected arccos(x)")
             try:
-                x = input("Please enter the value of x: ")
+                x = float(eval(input("Please enter the value of x: ")))
                 print(invCos(x))
             except ValueError:
                 print("Invalid input! Please enter numeric values.")
@@ -250,9 +250,9 @@ def TUI_calculator():
         elif user_input == 2:
             print("You selected ab^x")
             try:
-                a = float(input("Please enter the value of a: "))
-                b = float(input("Please enter the value of b: "))
-                x = float(input("Please enter the value of x: "))
+                a = float(eval(input("Please enter the value of a: ")))
+                b = float(eval(input("Please enter the value of b: ")))
+                x = float(eval(input("Please enter the value of x: ")))
                 print("The result: " + str(expGrowth(a, b, x)))
             except ValueError:
                 print("Invalid input! Please enter numeric values.")
@@ -260,10 +260,10 @@ def TUI_calculator():
         elif user_input == 3:
             print("You selected log_b(x)")
             try:
-                b = float(input("Please enter the value of b: "))
+                b = float(eval(input("Please enter the value of b: ")))
                 if b == 0:
                     raise Exception("B cannot be zero.")
-                x = float(input("Please enter the value of x: "))
+                x = float(eval(input("Please enter the value of x: ")))
                 print("The result: " + str(log(x, b)))
             except ValueError:
                 print("Invalid input! Please enter numeric values.")
@@ -295,8 +295,8 @@ def TUI_calculator():
         elif user_input == 6:
             print("You selected x^y")
             try:
-                x = float(input("Please enter the value of x: "))
-                y = float(input("Please enter the value of y: "))
+                x = float(eval(input("Please enter the value of x: ")))
+                y = float(eval(input("Please enter the value of y: ")))
                 print("The result: " + str(exp(x, y)))
             except ValueError:
                 print("Error: Please enter valid numeric values for x and y.")
