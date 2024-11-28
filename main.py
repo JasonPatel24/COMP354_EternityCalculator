@@ -409,7 +409,7 @@ def test_algebraic_mad():
     # Assert the MAD value is within reasonable range of the actual value
     assert math.isclose(result, expected_result, abs_tol=0.001), f"Expected MAD close to {expected_result}, but got {result}"
 
-    # Output a message if the test passes
+    # Output result if the test passes
     print("Test passed! The calculated MAD is within the acceptable range.")
     print(f"Expected value: {expected_result}")
     print(f"Actual value: {result}")
