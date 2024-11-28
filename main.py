@@ -3,6 +3,7 @@ import numbers # Useful if you need to check if your value is a real number
 import sys # To read user input
 import random
 import time
+import unittest
 from tkinter import *  
 
 def isNumber(toCheck):
@@ -397,15 +398,24 @@ def calc_equal():
     except:
         messagebox.showerror("Value Error", "Error")
         
+def test_algebraic_mad():
+    # Test data with algebraic numbers
+    test_data = [math.sqrt(2), math.sqrt(3), math.sqrt(4)]
 
+    print(f"Calculating MAD of the dataset: [{math.sqrt(2)}, {math.sqrt(3)}, {math.sqrt(4)}]\n")
+    result = meanAbsDev(test_data)
+    expected_result = 0.201
 
+    # Assert the MAD value is within reasonable range of the actual value
+    assert math.isclose(result, expected_result, abs_tol=0.001), f"Expected MAD close to {expected_result}, but got {result}"
 
-
-  
-
-
+    # Output a message if the test passes
+    print("Test passed! The calculated MAD is within the acceptable range.")
+    print(f"Expected value: {expected_result}")
+    print(f"Actual value: {result}")
 
 while(True):
+    #test_algebraic_mad()
     print("\nWould you like to use our calculator as a: \n0. TUI (Textual User Interface)\n1. GUI (Graphical User Interface)\n2. To Exit the program")
     user_input = (input("Please enter 0, 1, or 2: ")).strip()
     if (user_input == "0"):
@@ -469,4 +479,3 @@ while(True):
 
     else:
         print("Invalid input, try again.")
-
