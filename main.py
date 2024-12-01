@@ -9,9 +9,6 @@ from tkinter import *
 def isNumber(toCheck):
     return isinstance(toCheck, numbers.Number)
 
-def isNumber(toCheck):
-    return isinstance(toCheck, numbers.Number)
-
 # Inverse Cosine
 def factorial(n):
     """Calculate factorial of n manually."""
@@ -497,8 +494,6 @@ while(True):
     elif user_input == "2":
         print("Thank you for using Eternity! Exiting!")
         break
-    elif user_input == "3":
-        test_exp()
 
     else:
         print("Invalid input, try again.")
