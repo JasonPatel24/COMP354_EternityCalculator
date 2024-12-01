@@ -9,9 +9,6 @@ from tkinter import *
 def isNumber(toCheck):
     return isinstance(toCheck, numbers.Number)
 
-def isNumber(toCheck):
-    return isinstance(toCheck, numbers.Number)
-
 # Inverse Cosine
 def factorial(n):
     """Calculate factorial of n manually."""
@@ -135,30 +132,35 @@ def stdDev(data):
 
 # Exponentiation
 def exp(x, y):
-    
-    #Error handling for 2 cases
-    if x == 0 and y == 0:
+    try:
+        if (not isNumber(x) or not isNumber(y)): # Ensure all parameters are valid real numbers
+            return "ERROR: At least one of\'x\', or \'y\' is not a valid number."
+            
+        #Error handling for 2 cases
+        if x == 0 and y == 0:
             return "ERROR x value cannot be 0 while y is 0"
-    
-    if x == 0 and y < 0:
-        return "ERROR x value cannot be 0 while y is negative"
-    
-    if y == 0:
-        return 1
-    if y < 0:
-        x = 1/x
-        y = -y
-    integerPart = int(y)
-    decimalPart = y-integerPart
 
-    answer = 1
-    for _ in range(integerPart):
-        answer *= x
-    
-    if decimalPart != 0:
-        answer *= x**decimalPart
+        if x == 0 and y < 0:
+            return "ERROR x value cannot be 0 while y is negative"
 
-    return answer
+        if y == 0:
+            return 1
+        if y < 0:
+            x = 1/x
+            y = -y
+        integerPart = int(y)
+        decimalPart = y-integerPart
+
+        answer = 1
+        for _ in range(integerPart):
+            answer *= x
+
+        if decimalPart != 0:
+            answer *= x**decimalPart
+
+        return answer
+    except:
+        return "Unhandled exception occured."
     
 # Exponential Growth (for decay, provide a value for b such that 0 < b < 1)
 def expGrowth(a, b, x):
@@ -399,6 +401,22 @@ def calc_equal():
     except:
         messagebox.showerror("Value Error", "Error")
         
+def test_exp():
+    test_data = [2+2, 1+1]
+
+    print("Calculating Exponentiation of: [2+2, 1+1]")
+    result = exp(test_data[0], test_data[1])
+    expected_result = 16
+
+    if(result == expected_result):
+        print("Test passed! Exponentiation calculated properly")
+        print(f"Expected value: {expected_result}")
+        print(f"Actual value: {result}")
+    else:
+        print("Test failed! ")
+        print(f"Expected value: {expected_result}")
+        print(f"Actual value: {result}")
+
 def test_algebraic_mad():
     # Test data with algebraic numbers
     test_data = [math.sqrt(2), math.sqrt(3), math.sqrt(4)]
