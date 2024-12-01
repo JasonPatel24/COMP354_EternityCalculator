@@ -166,24 +166,25 @@ def expGrowth(a, b, x):
         # Error handling
         if (not isNumber(a) or not isNumber(b) or not isNumber(x)): # Ensure all parameters are valid real numbers
             print('ERROR: At least one of \'a\', \'b\', or \'x\' is not a valid number.')
-            exit()
+            return None
 
         if (a <= 0): # base value must be positive
             print('ERROR: Base \'a\' must be greater than 0.')
-            exit()
+            return None
 
         if (b < 0): # growth/decay rate cannot be negative
             print('ERROR: Growth/Decay rate \'b\' must be a real number greater than 0.')
-            exit()
+            return None
 
         if (x < 0): # exponent cannot be negative
             print('ERROR: exponent \'x\' cannot be negative.')
-            exit()
+            return None
 
         # Perform exponential growth/decay on provided values and return result
         return a * exp(b, x)
     except:
         print('An unhandled exception occurred. Please report this issue by sending us an email with the attempted parameters sent to the exponential growth/decay function.')
+        return None
         
 def log_test_cases(): 
     for test in range (1, 51):
